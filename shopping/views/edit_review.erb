@@ -1,0 +1,23 @@
+<div>
+  <% Review.all.each do |review| %>
+    <% if review == @review %>
+    <form class="navbar-form navbar-left" action="/edit_review/<%= review.id %>" name="review_id" method="post">
+      <h4>レビュー"<%= @review.title %>"を編集📝 + </h4>
+      <input type="text" class="form-control" name="name" placeholder="ニックネーム" 
+      required>
+      <input type="text" class="form-control" name="title" placeholder="タイトル"
+      required>
+      <select name="rating" class="form-control" required>
+        <option name="1" value="1">1</option>
+        <option name="2" value="2">2</option>
+        <option name="3" value="3">3</option>
+        <option name="4" value="4">4</option>
+        <option name="5" value="5">5</option>
+      </select>
+      <input type="text" class="form-control" name="paragraph" placeholder="レビュー"
+      required>
+      <input type="submit" class="レビューを追加"></input>
+    </form>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,16 @@
+<div>
+  
+  <form action="/item/<%= @item.id %>/edit" method="post">
+    <input type="text" name="name" placeholder="商品名" value="<%= CGI.escapeHTML(@item.name) %>" required>
+    <input type="number" name="price" placeholder="値段" 
+    value="<%= @item.price %>" required>
+    <input type="text" name="image_url" placeholder="画像URL" 
+    value="<%= CGI.escapeHTML(@item.image_url) %>" required>
+    <select name="category" id="category"  class="form-control">
+      <% Category.all.each do |category| %>
+        <option value="<%= category.id %>"><%= category.name %></option>
+      <% end %>
+    </select>
+    <input type="submit" value="更新">
+  </form>
+</div>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>Amazon 2.0</title>
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">
+    <script src="https://kit.fontawesome.com/aa039ccbb0.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Poppins&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#defaultNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        </div>
+        <div class="collapse navbar-collapse" id="defaultNavbar1">
+          <ul class="nav navbar-nav">
+            <% if !session[:user] %>
+              <li><a href="/"><h1>Amazon 2.0</h1></a></li>
+              <li class="navbar-form navbar-left"><a href="/signin">ログイン<span class="sr-only">(current)</span></a></li>
+              <li class="navbar-form navbar-left"><a href="/signup">ユーザー登録</a></li>
+            <% end %>
+          <% if session[:user] %>
+            <% if @user.mode_name == "admin" %>
+              <li><a href="/"><h1>Amazon 2.0</h1></a></li>
+              <li><a href="/">管理者モード</a></li>
+              <li><a href="/signout">ログアウト</a></li>
+              <li><a href="/my_cart"><%= User.find(session[:user]).name %>さんのカート</a></li>
+              <li><a href="/create_cart">カートを作成する</a>
+              </li>
+              <li><a href="/admin">管理者画面</a></li>
+              <li><a href="/favorite/list">いいねリスト</a></li>
+              <li><a href="/purchase_page">購入リスト</a></li>
+              <form class="navbar-form navbar-left" action="/add_item" method="post">
+              <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder="商品名">
+                <input type="text" class="form-control" name="image_url" placeholder="画像url">
+                <input type="text" class="form-control" name="price" placeholder="値段">
+                <select name="category" id="category"  class="form-control">
+                  <% Category.all.each do |category| %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                  <% end %>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-default">アイテムを追加</button>
+            </form>
+            <% end %>
+            <% if @user.mode_name == "seller" %>
+              <li><a href="/"><h1>Amazon 2.0</h1></a></li>
+              <li><a href="/">販売者モード</a></li>
+              <li><a href="/signout">ログアウト</a></li>
+              <li><a href="/my_cart"><%= User.find(session[:user]).name %>さんのカート</a></li>
+              <li><a href="/create_cart">カートを作成する</a>
+              </li>
+              <form class="navbar-form navbar-left" action="/add_item" method="post">
+              <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder="商品名">
+                <input type="text" class="form-control" name="image_url" placeholder="画像url">
+                <input type="text" class="form-control" name="price" placeholder="値段">
+                <select name="category" id="category"  class="form-control">
+                  <% Category.all.each do |category| %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                  <% end %>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-default">アイテムを追加</button>
+            </form>
+            <% end %>
+            <% if @user.mode_name == "buyer" %>
+              <li><a href="/"><h1>Amazon 2.0</h1></a></li>
+              <li><a href="/">販売者モード</a></li>
+              <li><a href="/signout">ログアウト</a></li>
+              <li><a href="/my_cart"><%= User.find(session[:user]).name %>さんのカート</a></li>
+              <li><a href="/create_cart">カートを作成する</a>
+              </li>
+              <li><a href="/favorite/list">いいねリスト</a></li>
+              <li><a href="/purchase_page">購入リスト</a></li>
+            <% end %>
+            <form action="/search" method="post">
+            </form>
+            <form class="navbar-form navbar-left" action="/search" method="post">
+              <div class="form-group">
+                <input class="form-control" type="text" name="keyword" placeholder="商品を検索">
+              </div>
+              <button type="submit" class="btn btn-default">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <%= yield %>
+  </body>
+</html>

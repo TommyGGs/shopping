@@ -1,0 +1,15 @@
+[1mException:[0m Errno::ENOENT: No such file or directory @ rb_file_s_mtime - /home/ec2-user/environment/shopping/(pry)
+--
+[1mFrom:[0m /home/ec2-user/.rvm/gems/ruby-3.0.0/gems/sinatra-contrib-2.1.0/lib/sinatra/reloader.rb:186 @ [1mlevel: 0[0m of backtrace (of 37).
+
+    [1;34m181[0m:         !ignore? && !removed? && mtime != [1;34;4mFile[0m.mtime(path)
+    [1;34m182[0m:       [32mend[0m
+    [1;34m183[0m: 
+    [1;34m184[0m:       [1;34m# Updates the mtime of the file being watched.[0m
+    [1;34m185[0m:       [32mdef[0m [1;34mupdate[0m
+ => [1;34m186[0m:         @mtime = [1;34;4mFile[0m.mtime(path)
+    [1;34m187[0m:       [32mend[0m
+    [1;34m188[0m: 
+    [1;34m189[0m:       [1;34m# Indicates whether or not the file being watched has inline[0m
+    [1;34m190[0m:       [1;34m# templates.[0m
+    [1;34m191[0m:       [32mdef[0m [1;34minline_templates?[0m

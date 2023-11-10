@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>カートの中身</title>
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">
+  </head>
+  <body>
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>カート一覧</th>
+            <th>カートを削除</th>
+            <th>入っている商品</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cart.each do |cart| %>
+            <tr>
+              <td>カート<%= cart.id %></td>
+              <td>
+                <form action="/delete_cart/<%= cart.id %>" method="post">
+                  <input type="submit" value="カートを削除">
+                </form>
+              </td>
+              <td>
+                <% CartItem.where(cart_id: cart.id).each do |ci| %>
+                  <%= ci.item.id %>
+                  <%= ci.item.name %>
+                  <%= ci.item.price %>円
+                  <form action="/delete/<%= ci.id %>" method="post">
+                    <input type="submit" value="カートから削除">
+                  </form>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p>全<%= @cart.count %>カート</p>
+    </div>
+  </body>
+</html>

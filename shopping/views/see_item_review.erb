@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= @item.name %>のレビュー</title>
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">
+    <script src="https://kit.fontawesome.com/aa039ccbb0.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <table class="table table-striped">
+         <h1><%= @item.name %>のレビュー</h1>
+        <thead>
+          <tr>
+            <th>ユーザーネーム</th>
+            <th>タイトル</th>
+            <th>評価</th>
+            <th>レビュー</th>
+            <th>レビューを削除</th>
+            <th>レビューを編集</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+           <% Review.all.each do |review| %>
+            <% if review.item_id == @item.id %>
+            <tr>
+                <td><%= review.name %></td>
+                <td><%= review.title %></td>
+                <td><%= review.rating %></td>
+                <td><%= review.paragraph %></td>
+                <td>
+                  <form action="/item_review/<%= review.id %>/delete" methop="post">
+                    <input type="hidden" name="review_id" value="<%= review.id %>">
+                    <input type="submit" value="削除">
+                  </form>
+                </td>
+                <td>
+                  <a href="/edit_review/<%= review.id %>">レビューを編集</a>
+                </td>
+            </tr>
+             <% end %>
+           <% end %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

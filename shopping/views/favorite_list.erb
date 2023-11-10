@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>いいねリスト</title>
+    <link rel="stylesheet" href="/assets/stylesheets/bootstrap.css">
+    <script src="https://kit.fontawesome.com/aa039ccbb0.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <table class="table table-striped">
+         <h1>いいねした商品は<%= @favorite.count %>個</h1>
+        <thead>
+          <tr>
+            <th>アイテムID</th>
+            <th>アイテム名</th>
+            <th>アイテムの価格</th>
+            <th>いいねを解除</th>
+            <th>入っているカート</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Item.all.each do |item| %>
+          <% if User.find(session[:user]).favorites.find_by(item_id: item.id) %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.name %></td>
+              <td><%= item.price %></td>
+              <td>
+                <form action="/item/<%= item.id %>/favorite_destroys" method="post">
+                  <button>
+                   解除
+                  </button>
+                </form>
+              </td>
+              <td>
+                <% CartItem.where(item_id: item.id).each do |ci| %>
+                カート<%= ci.cart_id %>
+                <% end %>
+               <!--  #@cartitem.where(item_id: item.id).each do |ci| %>
+                カート #ci.cart_id  
+                 end -->
+              </td>
+            </tr>
+        <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
